@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         test: /\.css$/i, // 匹配 .css 檔案
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       // 可以在此處添加處理圖片、字體等其他資源的 loader
     ],
