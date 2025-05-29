@@ -4,9 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production', // 生產模式，會啟用優化
-  entry: {
-    main: ['./src/index.js', './src/index.jsx', './src/index.tsx'].filter(Boolean),
-  },
+  entry: ['./src/index.js'].filter(Boolean),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js', // 使用 contenthash 確保緩存

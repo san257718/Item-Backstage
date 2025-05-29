@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  main: ['./src/index.js', './src/index.jsx', './src/index.tsx'].filter(Boolean),
+  entry: ['./src/index.js'].filter(Boolean),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -35,6 +35,11 @@ module.exports = {
         },
       },
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
+      },
+      {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
@@ -44,12 +49,17 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
+      minify: { // 壓縮 HTML
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+      },
     }),
     new webpack.ProvidePlugin({
       React: 'react',
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
 };
