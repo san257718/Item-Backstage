@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'production', // 生產模式，會啟用優化
@@ -17,7 +18,12 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: [
+              ['@babel/preset-react', {
+                runtime: 'automatic'
+              }],
+              '@babel/preset-env'
+            ],
           },
         },
       },
@@ -36,6 +42,9 @@ module.exports = {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
       },
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react',
     }),
   ],
   resolve: {
