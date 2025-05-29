@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  main: ['./src/index.js', './src/index.jsx', './src/index.tsx'].filter(Boolean),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',

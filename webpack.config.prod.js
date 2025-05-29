@@ -4,7 +4,9 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production', // 生產模式，會啟用優化
-  entry: './src/index.js',
+  entry: {
+    main: ['./src/index.js', './src/index.jsx', './src/index.tsx'].filter(Boolean),
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js', // 使用 contenthash 確保緩存
@@ -28,6 +30,11 @@ module.exports = {
         },
       },
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
+      },
+      {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
       },
@@ -48,6 +55,6 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
 };
