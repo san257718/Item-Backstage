@@ -1,7 +1,9 @@
-
+import LoginPage from './pages/LoginPage';
 
 export default function App (){
   return (
-    <div>123</div>
+    <div className='bg-all-page-background w-full h-screen'>
+      <LoginPage />
+    </div>
   )
 }
