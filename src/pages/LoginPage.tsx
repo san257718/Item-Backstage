@@ -1,9 +1,32 @@
+"use client";
+
 import ShieldIcon from "@mui/icons-material/Shield";
 import TextField from "@mui/material/TextField";
 import PersonIcon from "@mui/icons-material/Person";
 import Button from "@mui/material/Button";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+
+  const handleLogin = () => {
+    // 簡單的登入驗證
+    if (username === "admin@gmail.com" && password === "admin123") {
+      // 設置登入狀態
+      localStorage.setItem("isAuthenticated", "true");
+      // 跳轉到後台首頁
+      navigate("/admin/dashboard", { replace: true });
+    } else {
+      setError("帳號或密碼錯誤");
+    }
+    
+  };
+
   return (
     <div className="w-full min-h-full flex justify-center items-center">
       <div className="max-w-md w-full flex justify-center bg-[#fffc] rounded-lg shadow-xl">
@@ -32,6 +55,9 @@ export default function LoginPage() {
                     startAdornment: <PersonIcon color="action" />,
                   },
                 }}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                error={!!error}
               />
             </div>
             <div className="w-full flex justify-center">
@@ -41,9 +67,14 @@ export default function LoginPage() {
                 variant="outlined"
                 size="small"
                 sx={{ width: "45ch" }}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                error={!!error}
               />
             </div>
-            <Button variant="contained">登入</Button>
+            <Button variant="contained" onClick={handleLogin}>
+              登入
+            </Button>
 
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <h4>測試帳號</h4>
