@@ -1,15 +1,14 @@
-import { RouteObject } from "react-router-dom";
-import DashboardPage from "../pages/DashboardPage";
-import InventoryPage from "../pages/InventoryPage";
-import UsersPage from "../pages/UsersPage";
-import SettingsPage from "../pages/SettingsPage";
-import LoginPage from "../pages/LoginPage";
-import MainLayout from "../layout/MainLayout";
-import { Navigate, useLocation } from "react-router-dom";
+import { RouteObject } from 'react-router-dom';
+import DashboardPage from '../pages/DashboardPage';
+import InventoryPage from '../pages/InventoryPage';
+import UsersPage from '../pages/UsersPage';
+import SettingsPage from '../pages/SettingsPage';
+import LoginPage from '../pages/LoginPage';
+import MainLayout from '../layout/MainLayout';
+import { Navigate } from 'react-router-dom';
 
 // 檢查是否已登入
-const isAuthenticated = () =>
-  localStorage.getItem("isAuthenticated") === "true";
+const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
 
 // 受保護的路由元件
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -27,7 +26,7 @@ const LoginRoute = () => {
 // 登入路由
 const authRoutes: RouteObject[] = [
   {
-    path: "/",
+    path: '/',
     element: <LoginRoute />,
   },
 ];
@@ -35,7 +34,7 @@ const authRoutes: RouteObject[] = [
 // 後台路由
 const dashboardRoutes: RouteObject[] = [
   {
-    path: "/admin",
+    path: '/admin',
     element: (
       <ProtectedRoute>
         <MainLayout />
@@ -47,19 +46,19 @@ const dashboardRoutes: RouteObject[] = [
         element: <Navigate to="/admin/dashboard" replace />,
       },
       {
-        path: "dashboard",
+        path: 'dashboard',
         element: <DashboardPage />,
       },
       {
-        path: "inventory",
+        path: 'inventory',
         element: <InventoryPage />,
       },
       {
-        path: "users",
+        path: 'users',
         element: <UsersPage />,
       },
       {
-        path: "settings",
+        path: 'settings',
         element: <SettingsPage />,
       },
     ],
@@ -69,11 +68,10 @@ const dashboardRoutes: RouteObject[] = [
 // 通配符路由 - 處理所有未匹配的路徑
 const fallbackRoutes: RouteObject[] = [
   {
-    path: "*",
+    path: '*',
     element: <Navigate to="/" replace />,
   },
 ];
 
 // 合併所有路由
 export const routes: RouteObject[] = [...authRoutes, ...dashboardRoutes, ...fallbackRoutes];
-

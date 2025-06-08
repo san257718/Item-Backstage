@@ -1,9 +1,9 @@
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import StorageIcon from "@mui/icons-material/Storage";
-import PersonIcon from "@mui/icons-material/Person";
-import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import StorageIcon from '@mui/icons-material/Storage';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -11,9 +11,9 @@ export default function Sidebar() {
 
   const handleLogout = () => {
     // 清除登入狀態
-    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem('isAuthenticated');
     // 跳轉到登入頁
-    navigate("/");
+    navigate('/');
   };
 
   // 檢查當前路徑是否匹配
@@ -28,45 +28,37 @@ export default function Sidebar() {
         <h1 className="text-xl font-bold">庫存系統</h1>
       </div>
       <div className="flex-1 px-4 py-6 space-y-2">
-        <Link 
-          to="/admin/dashboard" 
+        <Link
+          to="/admin/dashboard"
           className={`flex items-center space-x-2 py-3 px-4 rounded-lg transition-colors ${
-            isActive('/admin/dashboard') 
-              ? 'bg-blue-100 text-blue-600' 
-              : 'hover:bg-gray-100'
+            isActive('/admin/dashboard') ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
           }`}
         >
           <DashboardIcon />
           <h5 className="text-sm font-medium">儀錶板</h5>
         </Link>
-        <Link 
-          to="/admin/inventory" 
+        <Link
+          to="/admin/inventory"
           className={`flex items-center space-x-2 py-3 px-4 rounded-lg transition-colors ${
-            isActive('/admin/inventory') 
-              ? 'bg-blue-100 text-blue-600' 
-              : 'hover:bg-gray-100'
+            isActive('/admin/inventory') ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
           }`}
         >
           <StorageIcon />
           <h5 className="text-sm font-medium">庫存管理</h5>
         </Link>
-        <Link 
-          to="/admin/users" 
+        <Link
+          to="/admin/users"
           className={`flex items-center space-x-2 py-3 px-4 rounded-lg transition-colors ${
-            isActive('/admin/users') 
-              ? 'bg-blue-100 text-blue-600' 
-              : 'hover:bg-gray-100'
+            isActive('/admin/users') ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
           }`}
         >
           <PersonIcon />
           <h5 className="text-sm font-medium">人員管理</h5>
         </Link>
-        <Link 
-          to="/admin/settings" 
+        <Link
+          to="/admin/settings"
           className={`flex items-center space-x-2 py-3 px-4 rounded-lg transition-colors ${
-            isActive('/admin/settings') 
-              ? 'bg-blue-100 text-blue-600' 
-              : 'hover:bg-gray-100'
+            isActive('/admin/settings') ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
           }`}
         >
           <SettingsSuggestIcon />

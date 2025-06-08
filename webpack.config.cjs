@@ -19,13 +19,7 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
-    historyApiFallback: {
-      disableDotRule: true,
-      rewrites: [
-        { from: /^\/admin/, to: '/index.html' },
-        { from: /./, to: '/index.html' }
-      ]
-    },
+    historyApiFallback: true,
     client: {
       overlay: true,
     },

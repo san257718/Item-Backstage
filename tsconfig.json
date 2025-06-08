@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
   },
   "include": ["*.ts", "*.tsx", "*.jsx", "*.js", "src/**/*.tsx", ],
-  "exclude": ["webpack.config.js", "webpack.config.prod.js"]
+  "exclude": ["webpack.config.js", "webpack.config.prod.js", "eslint.config.js"]
 }
