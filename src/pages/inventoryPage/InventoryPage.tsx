@@ -1,7 +1,9 @@
+import { Outlet } from "react-router-dom";
+
 export default function InventoryPage() {
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">庫存管理</h1>
+      {/* <h1 className="text-2xl font-bold mb-4">庫存管理</h1>
       <div className="bg-white rounded-lg shadow p-6">
         <div className="mb-4">
           <h2 className="text-lg font-semibold">庫存列表</h2>
@@ -38,7 +40,9 @@ export default function InventoryPage() {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
+
+      <Outlet />
     </div>
   );
 }

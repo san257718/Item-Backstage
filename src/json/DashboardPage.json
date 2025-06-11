@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "總庫存項目",
+    "amount": 3,
+    "content": "所有庫存商品數量"
+  },
+  {
+    "id": 2,
+    "title": "庫存總價值",
+    "amount": 385500,
+    "content": "所有庫存商品總價值"
+  },
+  {
+    "id": 3,
+    "title": "庫存不足",
+    "amount": 1,
+    "content": "需要補貨的商品"
+  },
+  {
+    "id": 4,
+    "title": "缺貨商品",
+    "amount": 1,
+    "content": "完全缺貨的商品"
+  },
+  {
+    "id": 5,
+    "title": "活躍員工",
+    "amount": 3,
+    "content": "目前在職員工數量"
+  }
+]

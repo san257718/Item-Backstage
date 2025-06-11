@@ -1,11 +1,14 @@
 import { RouteObject } from 'react-router-dom';
-import DashboardPage from '../pages/DashboardPage';
-import InventoryPage from '../pages/InventoryPage';
-import UsersPage from '../pages/UsersPage';
-import SettingsPage from '../pages/SettingsPage';
-import LoginPage from '../pages/LoginPage';
-import MainLayout from '../layout/MainLayout';
+import DashboardPage from '@/pages/DashboardPage/DashboardPage';
+import InventoryPage from '@/pages/inventoryPage/InventoryPage';
+import UsersPage from '@/pages/UsersPage/UsersPage';
+import SettingsPage from '@/pages/SettingsPage/SettingsPage';
+import LoginPage from '@/pages/LoginPage';
+import MainLayout from '@/layout/MainLayout';
 import { Navigate } from 'react-router-dom';
+import InventoryManagementPage from '@/pages/inventoryPage/management/managementPage';
+import Order from '@/pages/inventoryPage/management/order';
+import ProductSettingsPage from '@/pages/inventoryPage/management/product-settings';
 
 // 檢查是否已登入
 const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
@@ -31,6 +34,8 @@ const authRoutes: RouteObject[] = [
   },
 ];
 
+console.log(location.pathname);
+
 // 後台路由
 const dashboardRoutes: RouteObject[] = [
   {
@@ -52,6 +57,24 @@ const dashboardRoutes: RouteObject[] = [
       {
         path: 'inventory',
         element: <InventoryPage />,
+        children: [
+          {
+            index: true, // 預設顯示 management
+            element: <Navigate to="/admin/inventory/management" replace />,
+          },
+          {
+            path: 'management',
+            element: <InventoryManagementPage />,
+          },
+          {
+            path: 'order',
+            element: <Order />,
+          },
+          {
+            path: 'product-settings',
+            element: <ProductSettingsPage />,
+          },
+        ],
       },
       {
         path: 'users',

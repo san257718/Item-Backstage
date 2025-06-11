@@ -15,6 +15,10 @@
     "isolatedModules": true,
     "noEmit": false,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["*.ts", "*.tsx", "*.jsx", "*.js", "src/**/*.tsx", ],
   "exclude": ["webpack.config.js", "webpack.config.prod.js", "eslint.config.js"]
