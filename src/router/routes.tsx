@@ -32,9 +32,7 @@ const authRoutes: RouteObject[] = [
     path: '/',
     element: <LoginRoute />,
   },
-];
-
-console.log(location.pathname);
+]
 
 // 後台路由
 const dashboardRoutes: RouteObject[] = [
