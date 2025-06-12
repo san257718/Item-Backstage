@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import {menagementPageResponse} from '@/interface/response/inventoryPage/menagementPage';
-
+import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
 export default function InventoryManagementPage() {
   const [products, setProducts] = useState<menagementPageResponse[]>([
     {
@@ -104,18 +105,13 @@ export default function InventoryManagementPage() {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
-                    <button
-                      // onClick={() => handleEditProduct(item)}
-                      className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
-                    >
+                  <div className="space-x-2 flex">
+                    <button className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
+                      <EditCalendarOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                       編輯
                     </button>
-                    <button
-                      // onClick={() => handleDeleteProduct(item.id)}
-                      className="flex items-center justify-center px-3 py-2 text-red-600 border border-red-600 rounded-lg hover:bg-red-50 transition-colors"
-                    >
-                      刪除
+                    <button className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer">
+                      <DeleteOutlineOutlinedIcon />
                     </button>
                   </div>
                 </div>
