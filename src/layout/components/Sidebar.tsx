@@ -96,8 +96,8 @@ export default function Sidebar() {
                     key={index}
                     className={`block px-4 py-2 text-sm cursor-pointer w-full text-left transition-colors ${
                       isActive(subItem.path)
-                        ? 'bg-blue-50 text-blue-600 font-medium'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-50 text-blue-600 font-medium rounded-lg'
+                        : 'text-gray-700 hover:bg-gray-50 rounded-lg'
                     }`}
                     onClick={() => handleButtonRouter(subItem.path)}
                   >

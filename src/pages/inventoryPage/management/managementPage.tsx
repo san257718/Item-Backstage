@@ -69,7 +69,7 @@ export default function InventoryManagementPage() {
       <div className="rounded-lg bg-card text-card-foreground border-0 shadow-md">
         <div className="flex flex-col space-y-1.5 p-6">
           <h3>庫存列表</h3>
-          <p>共 3 件商品，篩選結果 3 件</p>
+          <p>共 {products.length} 件商品，篩選結果 3 件</p>
         </div>
 
         <div className="pt-0 p-6">
