@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { OrderProduct } from '@/interface/inventoryPage/order';
+import { OrderProduct } from '@/interface/response/inventoryPage/order';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { Divider } from '@mui/material';
@@ -84,11 +84,12 @@ export default function Order() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="right">訂單編號</TableCell>
-                  <TableCell align="right">訂單編號</TableCell>
-                  <TableCell align="right">訂單編號</TableCell>
-                  <TableCell align="right">訂單編號</TableCell>
+                  <TableCell>訂單編號</TableCell>
+                  <TableCell align="center">客戶名稱</TableCell>
+                  <TableCell align="center">商品數量</TableCell>
+                  <TableCell align="center">總金額</TableCell>
+                  <TableCell align="center">狀態</TableCell>
+                  <TableCell align="center">訂單日期</TableCell>
                   <TableCell align="center">操作</TableCell>
                 </TableRow>
               </TableHead>
@@ -98,22 +99,21 @@ export default function Order() {
                     key={item.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell component="th" scope="item">
-                      {item.name}
-                    </TableCell>
-                    <TableCell align="right">{item.id}</TableCell>
-                    <TableCell align="right">{item.id}</TableCell>
-                    <TableCell align="right">{item.id}</TableCell>
-                    <TableCell align="right">{item.id}</TableCell>
+                    <TableCell>{item.id}</TableCell>
+                    <TableCell align="center">{item.name}</TableCell>
+                    <TableCell align="center">{item.quantity}</TableCell>
+                    <TableCell align="center">{item.totalAmount}</TableCell>
+                    <TableCell align="center">{item.status}</TableCell>
+                    <TableCell align="center">{item.originData}</TableCell>
                     <TableCell align="center">
                       <div className="flex justify-center space-x-2">
                         <div className="flex items-center justify-center px-3 py-2 text-black border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
                           <RemoveRedEyeOutlinedIcon sx={{ width: '1rem', marginRight: '0.5rem' }} />
-                          <button>查看</button>
+                          <button className="font-medium">查看</button>
                         </div>
                         <div className="flex items-center justify-center px-3 py-2 text-black border border-gray-200  rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
                           <EditCalendarOutlinedIcon sx={{ width: '1rem', marginRight: '0.5rem' }} />
-                          <button>操作</button>
+                          <button className="font-medium">操作</button>
                         </div>
                       </div>
                     </TableCell>
