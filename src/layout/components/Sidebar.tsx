@@ -2,15 +2,13 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import StorageIcon from '@mui/icons-material/Storage';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsSuggestIcon from '@mui/icons-material/SettingsSuggest';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import AllInboxIcon from '@mui/icons-material/AllInbox';
-import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MenuItem from '@/interface/sidebar';
-
+import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [selectOpen, setSelectOpen] = useState<boolean>(false);
 
   const menuItems: MenuItem[] = [
     {
@@ -62,7 +60,7 @@ export default function Sidebar() {
     if (!subItems) return false;
     return subItems.some((subItem) => isActive(subItem.path));
   };
-  
+
   // 檢查主項目是否應該被高亮（包括子項目活動狀態）
   const isMainItemActive = (item: MenuItem) => {
     return isActive(item.path) || hasActiveSubItem(item.subItems);
@@ -76,39 +74,58 @@ export default function Sidebar() {
         <StorageIcon color="primary" sx={{ width: 32, height: 32 }} />
         <h1 className="text-xl font-bold">庫存系統</h1>
       </div>
-      {menuItems.map((item) => {
-        return (
-          <div key={item.id}>
-            <button
-              className={`flex items-center space-x-2 py-3 px-4 rounded-lg transition-colors w-full cursor-pointer ${
-                isMainItemActive(item) ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
-              }`}
-              onClick={() => handleButtonRouter(item.path)}
-            >
-              <item.icon />
-              <h5 className="text-sm font-medium">{item.label}</h5>
-            </button>
+      <div className="flex-1 px-4 py-6 space-y-2">
+        {menuItems.map((item) => {
+          return (
+            <div key={item.id}>
+              <button
+                className={`flex justify-between items-center space-x-2 py-3 px-4 rounded-lg transition-colors w-full cursor-pointer ${
+                  isMainItemActive(item) ? 'bg-blue-100 text-blue-600' : 'hover:bg-gray-100'
+                }`}
+                onClick={() => handleButtonRouter(item.path)}
+              >
+                <div className="flex items-center space-x-2">
+                  <item.icon />
+                  <h5 className="text-sm font-medium text-gray-600">{item.label}</h5>
+                </div>
+                {item.subItems.length > 0 && isMainItemActive(item) ? (
+                  <KeyboardArrowUpOutlinedIcon
+                    className={`${isMainItemActive(item) ? 'rotate-180' : ''} transition-transform`}
+                  />
+                ) : (
+                  <div>
+                    {item.subItems.length > 0 && (
+                      <KeyboardArrowDownOutlinedIcon
+                        className={`${
+                          isMainItemActive(item) ? 'rotate-180' : ''
+                        } transition-transform`}
+                      />
+                    )}
+                  </div>
+                )}
+              </button>
 
-            {hasActiveSubItem(item.subItems) && (
-              <div className="py-1 ml-4  border-blue-200">
-                {item.subItems?.map((subItem, index) => (
-                  <button
-                    key={index}
-                    className={`block px-4 py-2 text-sm cursor-pointer w-full text-left transition-colors ${
-                      isActive(subItem.path)
-                        ? 'bg-blue-50 text-blue-600 font-medium rounded-lg'
-                        : 'text-gray-700 hover:bg-gray-50 rounded-lg'
-                    }`}
-                    onClick={() => handleButtonRouter(subItem.path)}
-                  >
-                    {subItem.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        );
-      })}
+              {hasActiveSubItem(item.subItems) && (
+                <div className="py-1 border-blue-200">
+                  {item.subItems?.map((subItem, index) => (
+                    <button
+                      key={index}
+                      className={`block px-4 py-2 text-sm cursor-pointer w-full text-left transition-colors ${
+                        isActive(subItem.path)
+                          ? 'bg-blue-50 text-blue-600 font-medium rounded-lg'
+                          : 'text-gray-700 hover:bg-gray-50 rounded-lg'
+                      }`}
+                      onClick={() => handleButtonRouter(subItem.path)}
+                    >
+                      {subItem.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Product } from '@/interface/inventoryPage/menagementPage';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
+import {menagementPageResponse} from '@/interface/response/inventoryPage/menagementPage';
 
 export default function InventoryManagementPage() {
-  const [products, setProducts] = useState<Product[]>([
+  const [products, setProducts] = useState<menagementPageResponse[]>([
     {
       id: 1,
       name: '筆記型電腦',
@@ -35,10 +34,6 @@ export default function InventoryManagementPage() {
     },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-
   const getStatusColor = (status: string): string => {
     switch (status) {
       case '庫存充足':
@@ -60,9 +55,7 @@ export default function InventoryManagementPage() {
           <p>管理所有庫存商品和庫存狀況</p>
         </div>
         <div>
-          <Button variant="contained" onClick={() => setIsAddModalOpen(true)}>
-            新增商品
-          </Button>
+          <Button variant="contained">新增商品</Button>
         </div>
       </div>
 
@@ -109,7 +102,6 @@ export default function InventoryManagementPage() {
                       <span className="text-gray-600">供應商:</span>
                       <span className="font-medium">{item.supplier}</span>
                     </div>
-                  
                   </div>
 
                   <div className="flex gap-2">

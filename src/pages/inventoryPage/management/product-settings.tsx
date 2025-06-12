@@ -12,7 +12,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 export default function ProductSettingsPage() {
-  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<ProductSettingsResponse[]>([
     {
       id: 1,
@@ -60,7 +59,7 @@ export default function ProductSettingsPage() {
           </div>
 
           <div>
-            <Button variant="contained" onClick={() => setIsAddModalOpen(true)}>
+            <Button variant="contained">
               新增商品
             </Button>
           </div>

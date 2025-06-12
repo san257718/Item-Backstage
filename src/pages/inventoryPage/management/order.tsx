@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { OrderProduct } from '@/interface/response/inventoryPage/order';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import { Divider } from '@mui/material';
+
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
-
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,7 +14,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function Order() {
-  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<OrderProduct[]>([
     {
       id: 'LI-15830491',
@@ -57,7 +55,7 @@ export default function Order() {
           <p>管理所有庫存商品和庫存狀況</p>
         </div>
         <div>
-          <Button variant="contained" onClick={() => setIsAddModalOpen(true)}>
+          <Button variant="contained">
             新增商品
           </Button>
         </div>
