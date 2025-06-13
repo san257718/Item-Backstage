@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
@@ -33,10 +34,13 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-react', {
-                runtime: 'automatic'
-              }],
-              '@babel/preset-env'
+              [
+                '@babel/preset-react',
+                {
+                  runtime: 'automatic',
+                },
+              ],
+              '@babel/preset-env',
             ],
           },
         },
@@ -48,7 +52,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
     ],
   },
@@ -56,7 +60,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
-      minify: { // 壓縮 HTML
+      minify: {
+        // 壓縮 HTML
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true,
@@ -64,6 +69,10 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       React: 'react',
+    }),
+
+    new MiniCssExtractPlugin({
+      filename: '[name].css', // 會產生 e.g. main.css
     }),
   ],
   resolve: {

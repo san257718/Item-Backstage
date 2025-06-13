@@ -1,15 +1,29 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: 'production', // 生產模式，會啟用優化
+  mode: 'development',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js', // 使用 contenthash 確保緩存
-    publicPath: '/',
+    filename: 'bundle.js',
     clean: true,
+    publicPath: '/',
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    historyApiFallback: true,
+    client: {
+      overlay: true,
+    },
   },
   module: {
     rules: [
@@ -38,7 +52,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
     ],
   },
@@ -55,6 +69,10 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       React: 'react',
+    }),
+
+    new MiniCssExtractPlugin({
+      filename: '[name].css', // 會產生 e.g. main.css
     }),
   ],
   resolve: {
