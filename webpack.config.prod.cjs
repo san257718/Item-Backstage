@@ -7,7 +7,7 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.[contenthash].js', // 使用 contenthash 確保緩存
+    filename: 'bundle.js', // 使用 contenthash 確保緩存
     publicPath: '/',
     clean: true,
   },
