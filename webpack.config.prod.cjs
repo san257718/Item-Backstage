@@ -4,10 +4,11 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production', // 生產模式，會啟用優化
-  entry: ['./src/index.tsx'],
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.[contenthash].js', // 使用 contenthash 確保緩存
+    publicPath: '/',
     clean: true,
   },
   module: {
@@ -19,10 +20,13 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-react', {
-                runtime: 'automatic'
-              }],
-              '@babel/preset-env'
+              [
+                '@babel/preset-react',
+                {
+                  runtime: 'automatic',
+                },
+              ],
+              '@babel/preset-env',
             ],
           },
         },
@@ -42,7 +46,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
-      minify: { // 壓縮 HTML
+      minify: {
+        // 壓縮 HTML
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true,
