@@ -66,8 +66,6 @@ export default function Sidebar() {
     return isActive(item.path) || hasActiveSubItem(item.subItems);
   };
 
-  console.log(menuItems);
-
   return (
     <div className="h-screen flex flex-col bg-white">
       <div className="flex items-center h-16 px-6 border-b border-gray-200 space-x-3 bg-white">

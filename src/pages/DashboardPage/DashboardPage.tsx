@@ -40,7 +40,13 @@ export default function DashboardPage() {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h3 className="text-xl font-semibold text-gray-800">商品庫存管理</h3>
+          <p className=" text-gray-600">管理所有庫存商品和庫存狀況</p>
+        </div>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {data.map((item) => {
           return (
@@ -65,7 +71,6 @@ export default function DashboardPage() {
           );
         })}
       </div>
-
     </div>
   );
 }

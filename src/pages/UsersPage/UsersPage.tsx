@@ -40,7 +40,7 @@ export default function UsersPage() {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-xl font-semibold text-gray-800">人員管理</h3>
-          <p>管理所有員工資料和權限設定</p>
+          <p className=" text-gray-600">管理所有員工資料和權限設定</p>
         </div>
         <div>
           <Button variant="contained">新增員工</Button>

@@ -7,8 +7,8 @@ import LoginPage from '@/pages/LoginPage';
 import MainLayout from '@/layout/MainLayout';
 import { Navigate } from 'react-router-dom';
 import InventoryManagementPage from '@/pages/inventoryPage/management/managementPage';
-import Order from '@/pages/inventoryPage/management/order';
-import ProductSettingsPage from '@/pages/inventoryPage/management/product-settings';
+import Order from '@/pages/inventoryPage/order/order';
+import ProductSettingsPage from '@/pages/inventoryPage/product-settings/product-settings';
 
 // 檢查是否已登入
 const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';

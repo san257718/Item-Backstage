@@ -1,44 +1,30 @@
 export default function SettingsPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">系統設定</h1>
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-lg font-semibold mb-4">基本設定</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">系統名稱</label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                />
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h3 className="text-xl font-semibold text-gray-800">系統設定</h3>
+          <p className=" text-gray-600">管理系統各項設定和安全配置</p>
+        </div>
+      </div>
+
+      <div className="rounded-lg bg-card text-card-foreground border-0 shadow-md">
+        <div className="flex flex-col space-y-1.5 p-6">
+          <h3>權限管理</h3>
+          <p className=" text-gray-600">管理系統角色和權限設定</p>
+        </div>
+
+        <div className="pt-0 p-6">
+          <div className="border rounded-lg p-4 bg-gray-200/50 border-gray-200">
+            <h3 className="text-lg font-medium mb-4">添加新權限角色</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label className="text-sm">角色名稱</label>
+                <input placeholder="請輸入角色名稱" className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2 bg-white" />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">系統描述</label>
-                <textarea
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                  rows={3}
-                ></textarea>
-              </div>
-            </div>
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold mb-4">通知設定</h2>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                />
-                <label className="ml-2 block text-sm text-gray-900">啟用庫存不足提醒</label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                />
-                <label className="ml-2 block text-sm text-gray-900">啟用訂單狀態通知</label>
+              <div className="flex flex-col">
+                <label className="text-sm">角色描述</label>
+                <input placeholder="請輸入角色描述" className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2 bg-white" />
               </div>
             </div>
           </div>

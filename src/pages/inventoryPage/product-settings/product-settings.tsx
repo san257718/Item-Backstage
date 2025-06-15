@@ -45,7 +45,7 @@ export default function ProductSettingsPage() {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-xl font-semibold text-gray-800">商品庫存管理</h3>
-          <p>管理所有庫存商品和庫存狀況</p>
+          <p className=" text-gray-600">管理所有庫存商品和庫存狀況</p>
         </div>
       </div>
 

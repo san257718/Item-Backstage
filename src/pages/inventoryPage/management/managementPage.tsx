@@ -4,7 +4,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
+import ManagementPageModal from './model';
+
 export default function InventoryManagementPage() {
+  const [open, setOpen] = useState<boolean>(true);
   const [products, setProducts] = useState<menagementPageResponse[]>([
     {
       id: 1,
@@ -48,15 +51,21 @@ export default function InventoryManagementPage() {
     }
   };
 
+  const handleModalOpen = () => {
+    setOpen(!open);
+  };
+  console.log(open);
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-xl font-semibold text-gray-800">商品庫存管理</h3>
-          <p>管理所有庫存商品和庫存狀況</p>
+          <p className=" text-gray-600">管理所有庫存商品和庫存狀況</p>
         </div>
         <div>
-          <Button variant="contained">新增商品</Button>
+          <Button variant="contained" onClick={handleModalOpen}>
+            新增商品
+          </Button>
         </div>
       </div>
 
@@ -120,6 +129,7 @@ export default function InventoryManagementPage() {
           </div>
         </div>
       </div>
+      <ManagementPageModal open={open} handleModalOpen={handleModalOpen} />
     </div>
   );
 }
