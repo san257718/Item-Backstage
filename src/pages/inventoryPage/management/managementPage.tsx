@@ -7,7 +7,7 @@ import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
 import ManagementPageModal from './model';
 
 export default function InventoryManagementPage() {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<menagementPageResponse[]>([
     {
       id: 1,
