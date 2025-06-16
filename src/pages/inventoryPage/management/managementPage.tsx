@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
-import ManagementPageModal from './model';
+import ManagementPageModel from './model';
 
 export default function InventoryManagementPage() {
-  const [open, setOpen] = useState<boolean>(false);
+  const [addOpen, setAddOpen] = useState<boolean>(false);
+  const [editOpen, setEditOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<menagementPageResponse[]>([
     {
       id: 1,
@@ -38,6 +39,7 @@ export default function InventoryManagementPage() {
     },
   ]);
 
+  // 取得狀態顏色
   const getStatusColor = (status: string): string => {
     switch (status) {
       case '庫存充足':
@@ -51,10 +53,23 @@ export default function InventoryManagementPage() {
     }
   };
 
-  const handleModalOpen = () => {
-    setOpen(!open);
+  // 新增或編輯
+  const handleModalOpen = (value: string) => {
+    value === 'add' ? setAddOpen(!addOpen) : setEditOpen(!editOpen);
   };
-  console.log(open);
+
+  // 關閉新增或編輯
+  const headleModalClose = () => {
+    setAddOpen(false);
+    setEditOpen(false);
+  };
+
+  // 刪除
+  const headleDelete = (value: number) => {
+    setProducts(products.filter((item) => item.id !== value));
+  };
+
+  
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -63,7 +78,7 @@ export default function InventoryManagementPage() {
           <p className=" text-gray-600">管理所有庫存商品和庫存狀況</p>
         </div>
         <div>
-          <Button variant="contained" onClick={handleModalOpen}>
+          <Button variant="contained" onClick={() => handleModalOpen('add')}>
             新增商品
           </Button>
         </div>
@@ -115,11 +130,14 @@ export default function InventoryManagementPage() {
                   </div>
 
                   <div className="space-x-2 flex">
-                    <button className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
+                    <button
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                      onClick={() => handleModalOpen('edit')}
+                    >
                       <EditCalendarOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                       編輯
                     </button>
-                    <button className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer">
+                    <button className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer" onClick={() => headleDelete(item.id)}>
                       <DeleteOutlineOutlinedIcon />
                     </button>
                   </div>
@@ -129,7 +147,12 @@ export default function InventoryManagementPage() {
           </div>
         </div>
       </div>
-      <ManagementPageModal open={open} handleModalOpen={handleModalOpen} />
+      <ManagementPageModel
+        addOpen={addOpen}
+        editOpen={editOpen}
+        handleModalOpen={() => handleModalOpen('add')}
+        headleModalClose={() => headleModalClose()}
+      />
     </div>
   );
 }

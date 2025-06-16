@@ -8,11 +8,13 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 interface managementPageModalProps {
-  open: boolean;
-  handleModalOpen: () => void;
+  addOpen: boolean;
+  editOpen: boolean;
+  handleModalOpen: (value: string) => void;
+  headleModalClose: () => void;
 }
 
-export default function ManagementPageModal({ open, handleModalOpen }: managementPageModalProps) {
+export default function ManagementPageModel({ addOpen, editOpen, handleModalOpen, headleModalClose }: managementPageModalProps) {
   const [stock, setStock] = useState<{ id: string; name: string }[]>([
     { id: '1', name: '庫存充足' },
     { id: '2', name: '庫存不足' },
@@ -55,20 +57,21 @@ export default function ManagementPageModal({ open, handleModalOpen }: managemen
 
   return (
     <div>
-      {open && (
+      {addOpen || editOpen ? (
         <div className="fixed inset-0 bg-black/50  flex items-center justify-center p-4 z-50">
           <div className="rounded-lg shadow-sm w-full max-w-md bg-white">
             <div className="flex flex-col space-y-1.5 p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-semibold leading-none tracking-tight text-gray-800">
-                    新增商品
+                    {/* 新增商品 */}
+                    {addOpen ? '新增商品' : '編輯商品'}
                   </h3>
-                  <p className="text-gray-600 text-sm">新增庫存商品到系統</p>
+                  <p className="text-gray-600 text-sm">{addOpen ? '新增庫存商品到系統' : '修改庫存商品資訊'}</p>
                 </div>
                 <div className="">
                   <button
-                    onClick={handleModalOpen}
+                    onClick={headleModalClose}
                     className="cursor-pointer w-10 h-10 hover:bg-gray-200 hover:rounded-md"
                   >
                     <CloseOutlinedIcon color={'action'} />
@@ -161,18 +164,18 @@ export default function ManagementPageModal({ open, handleModalOpen }: managemen
                   direction="row"
                   sx={{ display: 'flex', justifyContent: 'center' }}
                 >
-                  <Button sx={{ width: '100%' }} variant="outlined">
+                  <Button sx={{ width: '100%' }} variant="outlined" onClick={headleModalClose}>
                     取消
                   </Button>
-                  <Button sx={{ width: '100%' }} variant="contained" type={'submit'}>
-                    新增
+                  <Button sx={{ width: '100%' }} variant="contained" type={'submit'} >
+                    {addOpen ? '新增' : '修改'}
                   </Button>
                 </Stack>
               </form>
             </div>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
