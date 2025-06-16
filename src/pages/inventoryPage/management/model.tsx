@@ -14,7 +14,12 @@ interface managementPageModalProps {
   headleModalClose: () => void;
 }
 
-export default function ManagementPageModel({ addOpen, editOpen, handleModalOpen, headleModalClose }: managementPageModalProps) {
+export default function ManagementPageModel({
+  addOpen,
+  editOpen,
+  handleModalOpen,
+  headleModalClose,
+}: managementPageModalProps) {
   const [stock, setStock] = useState<{ id: string; name: string }[]>([
     { id: '1', name: '庫存充足' },
     { id: '2', name: '庫存不足' },
@@ -67,7 +72,9 @@ export default function ManagementPageModel({ addOpen, editOpen, handleModalOpen
                     {/* 新增商品 */}
                     {addOpen ? '新增商品' : '編輯商品'}
                   </h3>
-                  <p className="text-gray-600 text-sm">{addOpen ? '新增庫存商品到系統' : '修改庫存商品資訊'}</p>
+                  <p className="text-gray-600 text-sm">
+                    {addOpen ? '新增庫存商品到系統' : '修改庫存商品資訊'}
+                  </p>
                 </div>
                 <div className="">
                   <button
@@ -167,7 +174,7 @@ export default function ManagementPageModel({ addOpen, editOpen, handleModalOpen
                   <Button sx={{ width: '100%' }} variant="outlined" onClick={headleModalClose}>
                     取消
                   </Button>
-                  <Button sx={{ width: '100%' }} variant="contained" type={'submit'} >
+                  <Button sx={{ width: '100%' }} variant="contained" type={'submit'}>
                     {addOpen ? '新增' : '修改'}
                   </Button>
                 </Stack>

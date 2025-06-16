@@ -55,9 +55,7 @@ export default function Order() {
           <p className=" text-gray-600">管理所有庫存商品和庫存狀況</p>
         </div>
         <div>
-          <Button variant="contained">
-            新增商品
-          </Button>
+          <Button variant="contained">新增商品</Button>
         </div>
       </div>
 

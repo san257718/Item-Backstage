@@ -6,7 +6,7 @@ export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -23,7 +23,7 @@ export default [
     },
   },
   {
-    files: ['webpack.config.js', 'webpack.config.prod.js'],
+    files: ['webpack.config.cjs', 'webpack.config.prod.cjs'],
     languageOptions: {
       globals: {
         __dirname: 'readonly',

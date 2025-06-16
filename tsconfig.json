@@ -20,6 +20,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["*.ts", "*.tsx", "*.jsx", "*.js", "src/**/*.tsx", ],
+  "include": ["*.ts", "*.tsx", "*.jsx", "*.js", "src/**/*.tsx", "eslint.config.js" ],
   "exclude": ["webpack.config.js", "webpack.config.prod.js", "eslint.config.js"]
 }

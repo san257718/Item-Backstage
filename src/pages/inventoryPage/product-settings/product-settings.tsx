@@ -59,9 +59,7 @@ export default function ProductSettingsPage() {
           </div>
 
           <div>
-            <Button variant="contained">
-              新增商品
-            </Button>
+            <Button variant="contained">新增商品</Button>
           </div>
         </div>
 
@@ -92,7 +90,6 @@ export default function ProductSettingsPage() {
                     key={item.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                   
                     <TableCell align="center">{item.category}</TableCell>
                     <TableCell align="center">{item.description}</TableCell>
                     <TableCell align="center">{item.count}</TableCell>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
@@ -55,7 +55,11 @@ export default function InventoryManagementPage() {
 
   // 新增或編輯
   const handleModalOpen = (value: string) => {
-    value === 'add' ? setAddOpen(!addOpen) : setEditOpen(!editOpen);
+    if (value === 'add') {
+      setAddOpen(!addOpen);
+    } else {
+      setEditOpen(!editOpen);
+    }
   };
 
   // 關閉新增或編輯
@@ -69,7 +73,6 @@ export default function InventoryManagementPage() {
     setProducts(products.filter((item) => item.id !== value));
   };
 
-  
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -137,7 +140,10 @@ export default function InventoryManagementPage() {
                       <EditCalendarOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                       編輯
                     </button>
-                    <button className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer" onClick={() => headleDelete(item.id)}>
+                    <button
+                      className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer"
+                      onClick={() => headleDelete(item.id)}
+                    >
                       <DeleteOutlineOutlinedIcon />
                     </button>
                   </div>
