@@ -67,7 +67,10 @@ export default function UsersPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {employeeList.map((item) => {
               return (
-                <div className="rounded-lg bg-card text-card-foreground shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+                <div
+                  key={item.id}
+                  className="rounded-lg bg-card text-card-foreground shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+                >
                   <div className="p-4">
                     <div className="flex items-start space-x-3 mb-10">
                       <div className="w-10 h-10 rounded-full bg-blue-300/50 flex justify-center items-center">

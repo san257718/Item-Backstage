@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
 import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
@@ -38,6 +38,11 @@ export default function InventoryManagementPage() {
       status: '缺貨',
     },
   ]);
+  const [displayedProducts, setDisplayedProducts] = useState<menagementPageResponse[]>([]);
+
+  useEffect(() => {
+    setDisplayedProducts(products);
+  }, [products]);
 
   // 取得狀態顏色
   const getStatusColor = (status: string): string => {
@@ -73,6 +78,12 @@ export default function InventoryManagementPage() {
     setProducts(products.filter((item) => item.id !== value));
   };
 
+  // 搜尋商品
+  const handleInputChange = (value: string) => {
+    const filteredProducts = products.filter((item) => item.name.includes(value));
+    setDisplayedProducts(filteredProducts);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -98,14 +109,17 @@ export default function InventoryManagementPage() {
             <div className="relative">
               <SearchIcon className="absolute left-3 top-2 text-gray-400" />
               <input
+                type="text"
                 placeholder="搜尋商品名稱或類別..."
+                // value={searchValue}
                 className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm pl-10 border-gray-200 focus:border-blue-500 focus:border-2"
+                onChange={(e) => handleInputChange(e.target.value)}
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {products.map((item) => {
+            {displayedProducts.map((item) => {
               return (
                 <div key={item.id} className="bg-white rounded-lg shadow-sm p-6">
                   <div className="flex justify-between items-start mb-4">

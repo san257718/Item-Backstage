@@ -9,7 +9,6 @@
     "build": "webpack --config webpack.config.prod.cjs",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx,cjs}\"",
     "lint:fix": "eslint \"**/*.{js,jsx,ts,tsx,cjs}\" --fix",
-
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\"",
     "deploy": "vercel --prod"
   },
