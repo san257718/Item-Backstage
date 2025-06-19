@@ -1,19 +1,20 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Switch } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import SettingsPageModel from './model';
+import { settingsPageResponse } from '@/interface/response/inventoryPage/settingsPage';
 
 export default function SettingsPage() {
   const [buttonGroup, setButtonGroup] = useState<boolean>(false);
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
-  const [roleData, setRoleData] = useState([
+  const [roleData, setRoleData] = useState<settingsPageResponse[]>([
     {
       id: 1,
-      name: '設定',
+      name: '系統管理員',
       description: '管理系統設定',
       status: false,
       list: [
@@ -37,7 +38,7 @@ export default function SettingsPage() {
     },
     {
       id: 2,
-      name: '角色',
+      name: '庫存管理員',
       description: '管理系統角色',
       status: false,
       list: [
@@ -53,7 +54,7 @@ export default function SettingsPage() {
     },
     {
       id: 3,
-      name: '用戶',
+      name: '人員管理員',
       description: '管理系統用戶',
       status: false,
       list: [
@@ -68,6 +69,12 @@ export default function SettingsPage() {
       ],
     },
   ]);
+
+  const [displayedRoleData, setDisplayedRoleData] = useState<settingsPageResponse[]>([]);
+
+  useEffect(() => {
+    setDisplayedRoleData(roleData);
+  }, [roleData]);
 
   // 權限角色切換
   const handleButtonGroup = (value: string) => {
@@ -105,6 +112,17 @@ export default function SettingsPage() {
   const headleModalClose = () => {
     setAddOpen(false);
     setEditOpen(false);
+  };
+
+  // 刪除
+  const headleDelete = (value: number) => {
+    setRoleData(roleData.filter((item) => item.id !== value));
+  };
+
+  // 搜尋商品
+  const handleInputChange = (value: string) => {
+    const filteredProducts = roleData.filter((item) => item.name.includes(value));
+    setDisplayedRoleData(filteredProducts);
   };
   return (
     <div className="space-y-6">
@@ -151,15 +169,20 @@ export default function SettingsPage() {
               <input
                 placeholder="搜尋商品名稱或類別..."
                 className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm pl-10 border-gray-200 focus:border-blue-500 focus:border-2"
+                onChange={(e) => handleInputChange(e.target.value)}
               />
             </div>
-            <Button sx={{ height: '40px' }} variant="contained" onClick={() => handleModalOpen('add')}>
+            <Button
+              sx={{ height: '40px' }}
+              variant="contained"
+              onClick={() => handleModalOpen('add')}
+            >
               新增權限腳色
             </Button>
           </div>
 
           <div className="space-y-4">
-            {roleData.map((item) => {
+            {displayedRoleData.map((item) => {
               return (
                 <div
                   key={item.id}
@@ -202,10 +225,16 @@ export default function SettingsPage() {
 
                       <div className="flex items-center gap-3">
                         <Switch onChange={() => handleRoleStatus(item.id)} />
-                        <button className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer" onClick={() => handleModalOpen('edit')}>
+                        <button
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                          onClick={() => handleModalOpen('edit')}
+                        >
                           <EditCalendarOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                         </button>
-                        <button className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer">
+                        <button
+                          className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer"
+                          onClick={() => headleDelete(item.id)}
+                        >
                           <DeleteOutlineOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                         </button>
                       </div>
