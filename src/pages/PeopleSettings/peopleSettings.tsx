@@ -5,7 +5,7 @@ import { EmployeeManagementResponse } from '@/interface/response/inventoryPage/e
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
-export default function UsersPage() {
+export default function PeopleSettings() {
   const [employeeList, setEmployeeList] = useState<EmployeeManagementResponse[]>([
     {
       id: 1,

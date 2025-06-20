@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router-dom';
 import DashboardPage from '@/pages/DashboardPage/DashboardPage';
 import InventoryPage from '@/pages/inventoryPage/InventoryPage';
-import UsersPage from '@/pages/UsersPage/UsersPage';
+import PeopleSettings from '@/pages/PeopleSettings/peopleSettings';
 import SettingsPage from '@/pages/SettingsPage/SettingsPage';
 import LoginPage from '@/pages/LoginPage';
 import MainLayout from '@/layout/MainLayout';
@@ -9,6 +9,8 @@ import { Navigate } from 'react-router-dom';
 import InventoryManagementPage from '@/pages/inventoryPage/management/managementPage';
 import Order from '@/pages/inventoryPage/order/order';
 import ProductSettingsPage from '@/pages/inventoryPage/product-settings/product-settings';
+import UserSettings from '@/pages/SettingsPage/userSettings/UserSettings';
+import RoleSettings from '@/pages/SettingsPage/roleSettings/RoleSettings';
 
 // 檢查是否已登入
 const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
@@ -75,12 +77,26 @@ const dashboardRoutes: RouteObject[] = [
         ],
       },
       {
-        path: 'users',
-        element: <UsersPage />,
+        path: 'people-settings',
+        element: <PeopleSettings />,
       },
       {
         path: 'settings',
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to="/admin/settings/role" replace />,
+          },
+          {
+            path: 'role',
+            element: <RoleSettings />,
+          },
+          {
+            path: 'user-settings',
+            element: <UserSettings />,
+          },
+        ]
       },
     ],
   },

@@ -30,8 +30,8 @@ export default function Sidebar() {
       ],
     },
     {
-      id: 'users',
-      path: '/admin/users',
+      id: 'people-settings',
+      path: '/admin/people-settings',
       icon: PersonIcon,
       label: '人員管理',
       subItems: [],
