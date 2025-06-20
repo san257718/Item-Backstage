@@ -42,6 +42,7 @@ export default function SettingsPageModel({
     ],
   });
 
+  // 模組權限狀態切換
   const handlemodulePermission = (value: string) => {
     const modulePermission = formData.modulePermission.map((item) => {
       if (item.name === value) {
@@ -72,7 +73,7 @@ export default function SettingsPageModel({
     e.preventDefault();
     console.log(formData);
   };
-  console.log(formData);
+
   return (
     <div>
       {addOpen || editOpen ? (

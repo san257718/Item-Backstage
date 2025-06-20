@@ -109,11 +109,12 @@ export default function RoleSettings() {
     setRoleData(roleData.filter((item) => item.id !== value));
   };
 
-  // 搜尋商品
+  // 搜尋權限角色
   const handleInputChange = (value: string) => {
     const filteredProducts = roleData.filter((item) => item.name.includes(value));
     setDisplayedRoleData(filteredProducts);
   };
+
   return (
     <div className="pt-0 p-6">
       <div className="flex justify-between mb-6">

@@ -1,19 +1,28 @@
-import { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 export default function SettingsPage() {
-  const [buttonGroup, setButtonGroup] = useState<boolean>(true);
+  // const [buttonGroup, setButtonGroup] = useState<boolean>(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // 若 pathname 不是已知路徑，就 redirect 一次
+    const allowedPaths = ['/admin/settings/role', '/admin/settings/user-settings'];
+    if (!allowedPaths.includes(location.pathname)) {
+      navigate('/admin/settings/role');
+    }
+  }, [location.pathname]);
   // 權限角色切換
   const handleButtonGroup = (value: string) => {
     if (value === 'Role') {
-      setButtonGroup(true);
       navigate('/admin/settings/role');
     } else {
-      setButtonGroup(false);
       navigate('/admin/settings/user-settings');
     }
   };
+
+  const isRolePage = location.pathname === '/admin/settings/role';
 
   return (
     <div className="space-y-6">
@@ -32,17 +41,17 @@ export default function SettingsPage() {
           <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mt-4">
             <button
               className={
-                buttonGroup
+                isRolePage
                   ? 'flex items-center gap-2 px-4 py-2 rounded-md transition-all bg-white text-blue-600 shadow-sm cursor-pointer'
                   : 'flex items-center gap-2 px-4 py-2 rounded-md transition-all text-gray-600 hover:text-gray-800 cursor-pointer'
               }
               onClick={() => handleButtonGroup('Role')}
             >
-              權限腳色
+              權限角色
             </button>
             <button
               className={
-                buttonGroup
+                isRolePage
                   ? 'flex items-center gap-2 px-4 py-2 rounded-md transition-all text-gray-600 hover:text-gray-800 cursor-pointer'
                   : 'flex items-center gap-2 px-4 py-2 rounded-md transition-all bg-white text-blue-600 shadow-sm cursor-pointer'
               }

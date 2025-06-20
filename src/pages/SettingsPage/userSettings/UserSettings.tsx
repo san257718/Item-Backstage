@@ -9,8 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Switch } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import UserSettingsPageModel from './model';
 export default function UserSettings() {
+  const [addOpen, setAddOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState<userSettingsList[]>([
     {
       id: 1,
@@ -44,6 +46,21 @@ export default function UserSettings() {
     },
   ]);
 
+  const [displayedUserData, setDisplayedUserData] = useState<userSettingsList[]>([]);
+
+  useEffect(() => {
+    setDisplayedUserData(userData);
+  }, [userData]);
+
+  // 新增
+  const handleModalOpen = () => {
+    setAddOpen(true);
+  };
+  // 關閉Model
+  const headleModalClose = () => {
+    setAddOpen(false);
+  };
+
   // 用戶管理狀態切換
   const handleRoleStatus = (value: number) => {
     const roleStatus = userData.map((item) => {
@@ -57,6 +74,18 @@ export default function UserSettings() {
     });
     setUserData(roleStatus);
   };
+
+  // 刪除
+  const headleDelete = (value: number) => {
+    setUserData(userData.filter((item) => item.id !== value));
+  };
+
+  // 搜尋權限角色
+  const handleInputChange = (value: string) => {
+    const filteredProducts = userData.filter((item) => item.name.includes(value));
+    setDisplayedUserData(filteredProducts);
+  };
+
   return (
     <div className="pt-0 p-6">
       <div className="flex justify-between mb-6">
@@ -65,10 +94,11 @@ export default function UserSettings() {
           <input
             placeholder="搜尋商品名稱或類別..."
             className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm pl-10 border-gray-200 focus:border-blue-500 focus:border-2"
+            onChange={(e) => handleInputChange(e.target.value)}
           />
         </div>
-        <Button sx={{ height: '40px' }} variant="contained">
-          新增權限腳色
+        <Button sx={{ height: '40px' }} variant="contained" onClick={handleModalOpen}>
+          新增權限角色
         </Button>
       </div>
 
@@ -87,7 +117,7 @@ export default function UserSettings() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userData.map((item) => (
+            {displayedUserData.map((item) => (
               <TableRow key={item.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell align="center">{item.name}</TableCell>
                 <TableCell align="center">{item.email}</TableCell>
@@ -121,7 +151,10 @@ export default function UserSettings() {
                 <TableCell align="center">
                   <div className="flex justify-center space-x-2">
                     <Switch onChange={() => handleRoleStatus(item.id)} />
-                    <div className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer">
+                    <div
+                      className="inline-flex items-center justify-center gap-2 px-3 py-2  border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors text-red-600 cursor-pointer"
+                      onClick={() => headleDelete(item.id)}
+                    >
                       <DeleteOutlineOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                     </div>
                   </div>
@@ -130,6 +163,12 @@ export default function UserSettings() {
             ))}
           </TableBody>
         </Table>
+
+        <UserSettingsPageModel
+          addOpen={addOpen}
+          handleModalOpen={handleModalOpen}
+          headleModalClose={headleModalClose}
+        />
       </div>
     </div>
   );
