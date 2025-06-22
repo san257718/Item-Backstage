@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { OrderProduct } from '@/interface/response/inventoryPage/order';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
 import Table from '@mui/material/Table';
@@ -12,8 +11,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import OrderModel from './model';
 
 export default function Order() {
+  const [addOpen, setAddOpen] = useState<boolean>(false);
+  const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [lookOpen, setLookOpen] = useState<boolean>(false);
   const [products, setProducts] = useState<OrderProduct[]>([
     {
       id: 'LI-15830491',
@@ -22,7 +25,7 @@ export default function Order() {
       quantity: 0,
       totalAmount: 0,
       originData: '2022-11-01',
-      status: 1,
+      status: '處理中',
       settings: [],
     },
     {
@@ -32,7 +35,7 @@ export default function Order() {
       quantity: 0,
       totalAmount: 0,
       originData: '2023-01-31',
-      status: 1,
+      status: '已出貨',
       settings: [],
     },
     {
@@ -42,10 +45,44 @@ export default function Order() {
       quantity: 0,
       totalAmount: 0,
       originData: '2024-05-01',
-      status: 1,
+      status: '已送達',
       settings: [],
     },
   ]);
+
+  // 訂單狀態顏色
+  const handleOrderStatus = (value: string) => {
+    switch (value) {
+      case '處理中':
+        return 'py-1 rounded-full text-sm font-bold bg-blue-100 text-blue-700';
+      case '已出貨':
+        return 'py-1 rounded-full text-sm font-bold bg-yellow-100 text-yellow-700';
+      case '已送達':
+        return 'py-1 rounded-full text-sm font-bold bg-green-100 text-green-700';
+    }
+  };
+
+  // 開啟model
+  const handleModalOpen = (value: string) => {
+    if (value === 'add') {
+      setAddOpen(!addOpen);
+    }
+
+    if (value === 'edit') {
+      setEditOpen(!editOpen);
+    }
+
+    if (value === 'look') {
+      setLookOpen(!lookOpen);
+    }
+  };
+
+  // 關閉新增商品
+  const headleModalClose = () => {
+    setAddOpen(false);
+    setEditOpen(false);
+    setLookOpen(false);
+  };
 
   return (
     <div className="space-y-6">
@@ -55,7 +92,9 @@ export default function Order() {
           <p className=" text-gray-600">管理所有庫存商品和庫存狀況</p>
         </div>
         <div>
-          <Button variant="contained">新增商品</Button>
+          <Button variant="contained" onClick={() => handleModalOpen('add')}>
+            新增商品
+          </Button>
         </div>
       </div>
 
@@ -99,18 +138,26 @@ export default function Order() {
                     <TableCell align="center">{item.name}</TableCell>
                     <TableCell align="center">{item.quantity}</TableCell>
                     <TableCell align="center">{item.totalAmount}</TableCell>
-                    <TableCell align="center">{item.status}</TableCell>
+                    <TableCell align="center">
+                      <p className={handleOrderStatus(item.status)}>{item.status}</p>
+                    </TableCell>
                     <TableCell align="center">{item.originData}</TableCell>
                     <TableCell align="center">
                       <div className="flex justify-center space-x-2">
-                        <div className="flex items-center justify-center px-3 py-2 text-black border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
+                        <button
+                          className="flex items-center justify-center px-3 py-2 text-black border border-gray-200 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                          onClick={() => handleModalOpen('look')}
+                        >
                           <RemoveRedEyeOutlinedIcon sx={{ width: '1rem', marginRight: '0.5rem' }} />
-                          <button className="font-medium">查看</button>
-                        </div>
-                        <div className="flex items-center justify-center px-3 py-2 text-black border border-gray-200  rounded-lg hover:bg-blue-50 transition-colors cursor-pointer">
+                          查看
+                        </button>
+                        <button
+                          className="flex items-center justify-center px-3 py-2 text-black border border-gray-200  rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                          onClick={() => handleModalOpen('edit')}
+                        >
                           <EditCalendarOutlinedIcon sx={{ width: '1rem', marginRight: '0.5rem' }} />
-                          <button className="font-medium">操作</button>
-                        </div>
+                          編輯
+                        </button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -120,6 +167,13 @@ export default function Order() {
           </TableContainer>
         </div>
       </div>
+
+      <OrderModel
+        addOpen={addOpen}
+        editOpen={editOpen}
+        lookOpen={lookOpen}
+        headleModalClose={headleModalClose}
+      />
     </div>
   );
 }

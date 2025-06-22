@@ -96,7 +96,7 @@ const dashboardRoutes: RouteObject[] = [
             path: 'user-settings',
             element: <UserSettings />,
           },
-        ]
+        ],
       },
     ],
   },

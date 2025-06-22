@@ -1,5 +1,3 @@
-
-
 export interface menagementPageResponse {
   id: number;
   name: string;

@@ -5,6 +5,6 @@ export interface OrderProduct {
   quantity: number;
   totalAmount: number;
   originData: string;
-  status: number;
+  status: string;
   settings: string[];
 }
