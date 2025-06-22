@@ -22,8 +22,9 @@ export default function Order() {
       id: 'LI-15830491',
       originaName: '筆記型電腦',
       name: '王小明',
-      quantity: 0,
-      totalAmount: 0,
+      quantity: 4,
+      totalAmount: 400,
+      unitPrice: 100,
       originData: '2022-11-01',
       status: '處理中',
       settings: [],
@@ -34,6 +35,7 @@ export default function Order() {
       name: '張小明',
       quantity: 0,
       totalAmount: 0,
+      unitPrice: 200,
       originData: '2023-01-31',
       status: '已出貨',
       settings: [],
@@ -42,8 +44,9 @@ export default function Order() {
       id: 'QW-31234253',
       originaName: '印表機',
       name: '李小明',
-      quantity: 0,
-      totalAmount: 0,
+      quantity: 1,
+      totalAmount: 300,
+      unitPrice: 300,
       originData: '2024-05-01',
       status: '已送達',
       settings: [],
@@ -119,9 +122,11 @@ export default function Order() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>訂單編號</TableCell>
+                  <TableCell align="center">訂單編號</TableCell>
                   <TableCell align="center">客戶名稱</TableCell>
+                  <TableCell align="center">商品名稱</TableCell>
                   <TableCell align="center">商品數量</TableCell>
+                  <TableCell align="center">單價</TableCell>
                   <TableCell align="center">總金額</TableCell>
                   <TableCell align="center">狀態</TableCell>
                   <TableCell align="center">訂單日期</TableCell>
@@ -134,9 +139,11 @@ export default function Order() {
                     key={item.name}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell>{item.id}</TableCell>
+                    <TableCell align="center">{item.id}</TableCell>
                     <TableCell align="center">{item.name}</TableCell>
+                    <TableCell align="center">{item.originaName}</TableCell>
                     <TableCell align="center">{item.quantity}</TableCell>
+                    <TableCell align="center">{item.unitPrice}</TableCell>
                     <TableCell align="center">{item.totalAmount}</TableCell>
                     <TableCell align="center">
                       <p className={handleOrderStatus(item.status)}>{item.status}</p>
@@ -169,6 +176,7 @@ export default function Order() {
       </div>
 
       <OrderModel
+        products={products}
         addOpen={addOpen}
         editOpen={editOpen}
         lookOpen={lookOpen}

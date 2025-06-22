@@ -4,7 +4,16 @@ export interface OrderProduct {
   name: string;
   quantity: number;
   totalAmount: number;
+  unitPrice: number;
   originData: string;
   status: string;
   settings: string[];
+}
+
+export interface OrderTable {
+  id: number;
+  originaName: string;
+  quantity: number;
+  unitPrice: number;
+  subtotal: number;
 }
