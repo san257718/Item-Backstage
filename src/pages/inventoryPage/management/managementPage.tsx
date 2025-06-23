@@ -5,44 +5,12 @@ import { menagementPageResponse } from '@/interface/response/inventoryPage/menag
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
 import ManagementPageModel from './model';
+import useManagement from '@/store/managementStore/useManagementStore';
 
 export default function InventoryManagementPage() {
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
-  const [products, setProducts] = useState<menagementPageResponse[]>([
-    {
-      id: 1,
-      name: '筆記型電腦',
-      category: '電子產品',
-      quantity: 15,
-      unitPrice: 25000,
-      supplier: '科技公司A',
-      status: '庫存充足',
-    },
-    {
-      id: 2,
-      name: '辦公椅',
-      category: '家具',
-      quantity: 3,
-      unitPrice: 3500,
-      supplier: '家具公司B',
-      status: '庫存吃緊',
-    },
-    {
-      id: 3,
-      name: '印表機',
-      category: '電子產品',
-      quantity: 0,
-      unitPrice: 8000,
-      supplier: '科技公司C',
-      status: '缺貨',
-    },
-  ]);
-  const [displayedProducts, setDisplayedProducts] = useState<menagementPageResponse[]>([]);
-
-  useEffect(() => {
-    setDisplayedProducts(products);
-  }, [products]);
+  const { headleDelete, handleInputChange, displayedProducts, products } = useManagement();
 
   // 取得狀態顏色
   const getStatusColor = (status: string): string => {
@@ -73,17 +41,6 @@ export default function InventoryManagementPage() {
     setEditOpen(false);
   };
 
-  // 刪除
-  const headleDelete = (value: number) => {
-    setProducts(products.filter((item) => item.id !== value));
-  };
-
-  // 搜尋商品
-  const handleInputChange = (value: string) => {
-    const filteredProducts = products.filter((item) => item.name.includes(value));
-    setDisplayedProducts(filteredProducts);
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -101,7 +58,9 @@ export default function InventoryManagementPage() {
       <div className="rounded-lg bg-card text-card-foreground border-0 shadow-md">
         <div className="flex flex-col space-y-1.5 p-6">
           <h3>庫存列表</h3>
-          <p>共 {products.length} 件商品，篩選結果 3 件</p>
+          <p>
+            共 {products.length} 件商品，篩選結果 {displayedProducts.length} 件
+          </p>
         </div>
 
         <div className="pt-0 p-6">

@@ -7,13 +7,10 @@ import TableRow from '@mui/material/TableRow';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useState } from 'react';
 import { OrderProduct } from '@/interface/response/inventoryPage/order';
+import useOrder from '@/store/managementStore/useOrderStore';
 
-interface AddTableProps {
-  products: OrderProduct[];
-}
-
-export default function AddTable({ products }: AddTableProps) {
-  const [table, setTable] = useState<OrderProduct[]>(products);
+export default function AddTable() {
+  const { displayedProducts } = useOrder();
 
   return (
     <div>
@@ -29,7 +26,7 @@ export default function AddTable({ products }: AddTableProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {table.map((row) => (
+            {displayedProducts.map((row) => (
               <TableRow key={row.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell>
                   <div>

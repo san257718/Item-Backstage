@@ -5,14 +5,12 @@ import AddTable from './model-addTable';
 import { OrderProduct } from '@/interface/response/inventoryPage/order';
 
 interface OrderModelProps {
-  products: OrderProduct[];
   addOpen: boolean;
   editOpen: boolean;
   lookOpen: boolean;
   headleModalClose: () => void;
 }
 export default function OrderModel({
-  products,
   addOpen,
   editOpen,
   lookOpen,
@@ -158,7 +156,7 @@ export default function OrderModel({
                   </div>
                   {/* <div className="text-center py-8 text-gray-500">請新增訂單商品</div> */}
 
-                  <AddTable products={products} />
+                  <AddTable />
                 </div>
 
                 <div className="border-t border-t-gray-200 pt-4">
