@@ -146,7 +146,7 @@ export default function ManagementPageModel({
                 </div>
 
                 <Box>
-                  <FormControl fullWidth>
+                  <FormControl fullWidth size="small">
                     <InputLabel id="stock">庫存狀態</InputLabel>
                     <Select
                       labelId="stock"

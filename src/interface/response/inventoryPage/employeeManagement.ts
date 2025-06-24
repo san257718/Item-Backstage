@@ -1,4 +1,4 @@
-export interface EmployeeManagementResponse {
+export default interface EmployeeManagementResponse {
   id: number;
   name: string;
   email: string;
