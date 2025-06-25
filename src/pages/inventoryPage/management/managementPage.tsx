@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import SearchIcon from '@mui/icons-material/Search';
-import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined';
 import ManagementPageModel from './model';
 import useManagement from '@/store/managementStore/useManagementStore';
+import { menagementIFormInputRequest } from '@/interface/request/menagementPage';
+import { useForm } from 'react-hook-form';
 
 export default function InventoryManagementPage() {
   const [addOpen, setAddOpen] = useState<boolean>(false);
   const [editOpen, setEditOpen] = useState<boolean>(false);
   const { headleDelete, handleInputChange, displayedProducts, products } = useManagement();
+  const [currentEditData, setCurrentEditData] = useState<menagementIFormInputRequest | null>(null); // 用於儲存編輯時的資料
 
   // 取得狀態顏色
   const getStatusColor = (status: string): string => {
@@ -27,11 +29,23 @@ export default function InventoryManagementPage() {
   };
 
   // 新增或編輯
-  const handleModalOpen = (value: string) => {
-    if (value === 'add') {
-      setAddOpen(!addOpen);
+  const handleModalOpen = (mode: string, data?: menagementIFormInputRequest) => {
+    if (mode === 'add') {
+      setAddOpen(true);
+      setEditOpen(false); // 確保編輯模式關閉
+      setCurrentEditData({
+        // 提供新增模式下的初始空值
+        name: '',
+        category: '',
+        quantity: 0,
+        unitPrice: 0,
+        supplier: '',
+        status: '',
+      });
     } else {
-      setEditOpen(!editOpen);
+      setEditOpen(true);
+      setAddOpen(false); // 確保新增模式關閉
+      setCurrentEditData(data || null); // 設定要編輯的資料
     }
   };
 
@@ -39,6 +53,21 @@ export default function InventoryManagementPage() {
   const headleModalClose = () => {
     setAddOpen(false);
     setEditOpen(false);
+    setCurrentEditData(null); // 清除編輯資料
+  };
+
+  // 表單提交處理函數 (從子組件傳遞過來)
+  const handleFormSubmit = (data: menagementIFormInputRequest) => {
+    if (addOpen) {
+      // 執行新增操作
+      console.log('執行新增:', data);
+      setCurrentEditData(data); // 假設 useManagement 提供 addProduct
+    } else if (editOpen && currentEditData?.id) {
+      // 執行編輯操作 (需要確保有 id)
+      console.log('執行編輯:', { ...data, id: currentEditData.id });
+      setCurrentEditData({ ...data, id: currentEditData.id }); // 假設 useManagement 提供 updateProduct
+    }
+    headleModalClose(); // 提交後關閉模態框
   };
 
   return (
@@ -108,7 +137,7 @@ export default function InventoryManagementPage() {
                   <div className="space-x-2 flex">
                     <button
                       className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
-                      onClick={() => handleModalOpen('edit')}
+                      onClick={() => handleModalOpen('edit', item)}
                     >
                       <EditCalendarOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                       編輯
@@ -129,8 +158,9 @@ export default function InventoryManagementPage() {
       <ManagementPageModel
         addOpen={addOpen}
         editOpen={editOpen}
-        handleModalOpen={() => handleModalOpen('add')}
-        headleModalClose={() => headleModalClose()}
+        headleModalClose={headleModalClose}
+        formData={currentEditData!} // 傳遞當前編輯資料或新增時的空資料
+        onSubmit={handleFormSubmit} // 將提交函數傳給子組件
       />
     </div>
   );

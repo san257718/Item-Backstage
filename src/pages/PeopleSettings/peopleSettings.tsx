@@ -33,7 +33,9 @@ export default function PeopleSettings() {
           <h3 className="text-xl font-semibold text-gray-800">人員管理</h3>
           <p className=" text-gray-600">管理所有員工資料和權限設定</p>
         </div>
-        <Button variant="contained" onClick={() => handleModalOpen('add')}>新增員工</Button>
+        <Button variant="contained" onClick={() => handleModalOpen('add')}>
+          新增員工
+        </Button>
       </div>
 
       <div className="rounded-lg bg-card text-card-foreground border-0 shadow-md">
@@ -80,7 +82,10 @@ export default function PeopleSettings() {
                     </div>
 
                     <div className="space-x-2 flex">
-                      <button className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer" onClick={() => handleModalOpen('edit')}>
+                      <button
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 font-medium text-sm border border-gray-400/70 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                        onClick={() => handleModalOpen('edit')}
+                      >
                         <EditCalendarOutlinedIcon sx={{ width: '1rem', height: '1rem' }} />
                         編輯
                       </button>

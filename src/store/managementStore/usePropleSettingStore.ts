@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import EmployeeManagementResponse  from '../../interface/response/inventoryPage/employeeManagement';
+import EmployeeManagementResponse from '../../interface/response/inventoryPage/employeeManagement';
 interface PropleSetting {
   displayedProducts: EmployeeManagementResponse[];
   products: EmployeeManagementResponse[];

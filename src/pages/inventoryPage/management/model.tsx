@@ -1,63 +1,77 @@
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import useManagement from '@/store/managementStore/useManagementStore';
+import { menagementIFormInputRequest } from '@/interface/request/menagementPage';
+import {
+  TextField,
+  Button,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Stack,
+  FormHelperText, // 用於顯示錯誤訊息
+  SelectChangeEvent,
+} from '@mui/material';
 interface managementPageModalProps {
+  formData: menagementIFormInputRequest;
   addOpen: boolean;
   editOpen: boolean;
-  handleModalOpen: (value: string) => void;
   headleModalClose: () => void;
+  onSubmit: (data: menagementIFormInputRequest) => void;
 }
 
 export default function ManagementPageModel({
+  formData,
   addOpen,
   editOpen,
-  handleModalOpen,
   headleModalClose,
+  onSubmit,
 }: managementPageModalProps) {
-  const [stock, setStock] = useState<{ id: string; name: string }[]>([
-    { id: '1', name: '庫存充足' },
-    { id: '2', name: '庫存不足' },
-    { id: '3', name: '缺貨' },
-  ]);
-  const [stockId, setStockId] = useState('');
+  const { selectProducts } = useManagement();
 
-  // 1. 定義表單的狀態
-  const [formData, setFormData] = useState({
-    productName: '',
-    productCategory: '',
-    quantity: 0,
-    unitPrice: 0,
-    stockId: '', // 用於儲存選中的庫存狀態ID
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<menagementIFormInputRequest>({
+    // defaultValues 會在組件第一次渲染時設定
+    // 當 formData 變化時，useEffect 會觸發 reset
+    defaultValues: formData || {
+      // 如果 formData 是 null (新增模式)，提供一個預設空物件
+      productName: '',
+      productCategory: '',
+      quantity: 0,
+      unitPrice: 0,
+      supplier: '',
+      stockId: '',
+    },
   });
 
-  // 2. 處理所有輸入欄位的變更
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  useEffect(() => {
+    // 只有當 formData 存在時才 reset，因為新增時可能為 null
+    if (formData) {
+      reset(formData);
+    } else {
+      // 新增模式時，重置為空表單
+      reset({
+        name: '',
+        category: '',
+        quantity: 0,
+        unitPrice: 0,
+        supplier: '',
+        status: '',
+      });
+    }
+  }, [formData, reset]);
 
-  // 3. 處理 Select 下拉選單的變更
-  const handleSelectChange = (e: SelectChangeEvent<string>) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      stockId: e.target.value,
-    }));
-    stock.forEach((item) => item.id === e.target.value && setStockId(item.id));
-  };
-
-  // 4. 處理表單提交
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 防止表單預設提交行為導致頁面刷新
-    console.log('提交的表單資料:', formData);
+  // 內部提交處理函數，它會呼叫父層傳入的 onSubmit
+  const handleInternalSubmit: SubmitHandler<menagementIFormInputRequest> = (data) => {
+    // console.log('子層表單提交的資料:', data); // 可以用於調試
+    onSubmit(data); // 呼叫父層傳入的 onSubmit 函數
   };
 
   return (
@@ -88,81 +102,132 @@ export default function ManagementPageModel({
             </div>
 
             <div className="pt-0 p-6">
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-4" onSubmit={handleSubmit(handleInternalSubmit)}>
                 <div className="space-y-2">
-                  <label>商品名稱</label>
-                  <input
-                    className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2"
-                    placeholder="請輸入商品名稱"
-                    id="productName"
-                    name="productName" // 添加 name 屬性以便識別
-                    onChange={handleInputChange}
+                  <label className="text-sm font-medium leading-none">商品名稱</label>
+
+                  <Controller
+                    name="name"
+                    control={control}
+                    rules={{ required: '商品名稱為必填' }} // 驗證規則
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        size="small"
+                        placeholder="請輸入商品名稱"
+                        error={!!errors.name} // 根據錯誤狀態顯示紅色邊框
+                        helperText={errors.name?.message} // 顯示錯誤訊息
+                        variant="standard"
+                      />
+                    )}
                   />
                 </div>
                 <div className="space-y-2">
-                  <label>商品類別</label>
-                  <input
-                    className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2"
-                    placeholder="請輸入商品類別"
-                    id="productCategory"
-                    name="productCategory" // 添加 name 屬性以便識別
-                    onChange={handleInputChange}
+                  <label className="text-sm font-medium leading-none">商品類別</label>
+
+                  <Controller
+                    name="category"
+                    control={control}
+                    rules={{ required: '商品類別為必填' }} // 驗證規則
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        size="small"
+                        placeholder="請輸入商品類別"
+                        error={!!errors.category} // 根據錯誤狀態顯示紅色邊框
+                        helperText={errors.category?.message} // 顯示錯誤訊息
+                        variant="standard"
+                      />
+                    )}
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label>數量</label>
-                    <input
-                      className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2 placeholder:text-black"
-                      placeholder="0"
-                      id="quantity"
-                      name="quantity" // 添加 name 屬性以便識別
-                      onChange={handleInputChange}
+                    <label className="text-sm font-medium leading-none">數量</label>
+                    <Controller
+                      name="quantity"
+                      control={control}
+                      rules={{ required: '商品類別為必填' }} // 驗證規則
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          size="small"
+                          placeholder="請輸入商品類別"
+                          error={!!errors.quantity} // 根據錯誤狀態顯示紅色邊框
+                          helperText={errors.quantity?.message} // 顯示錯誤訊息
+                          variant="standard"
+                        />
+                      )}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label>單價</label>
-                    <input
-                      className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2 placeholder:text-black"
-                      placeholder="0"
-                      id="unitPrice"
-                      name="unitPrice" // 添加 name 屬性以便識別
-                      onChange={handleInputChange}
+                    <label className="text-sm font-medium leading-none">單價</label>
+                    <Controller
+                      name="unitPrice"
+                      control={control}
+                      rules={{ required: '商品類別為必填' }} // 驗證規則
+                      render={({ field }) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          size="small"
+                          placeholder="請輸入商品類別"
+                          error={!!errors.unitPrice} // 根據錯誤狀態顯示紅色邊框
+                          helperText={errors.unitPrice?.message} // 顯示錯誤訊息
+                          variant="standard"
+                        />
+                      )}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label>數量</label>
-                  <input
-                    className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground disabled:cursor-not-allowed outline-[0] disabled:opacity-50 md:text-sm border-gray-200 focus:border-black focus:border-2 placeholder:text-black"
-                    placeholder="0"
-                    id="quantity2"
-                    name="quantity2"
-                    type="number"
-                    onChange={handleInputChange}
+                  <label className="text-sm font-medium leading-none">供應商</label>
+
+                  <Controller
+                    name="supplier"
+                    control={control}
+                    rules={{ required: '供應商為必填' }} // 驗證規則
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        size="small"
+                        placeholder="請輸入商品類別"
+                        error={!!errors.supplier} // 根據錯誤狀態顯示紅色邊框
+                        helperText={errors.supplier?.message} // 顯示錯誤訊息
+                        variant="standard"
+                      />
+                    )}
                   />
                 </div>
 
                 <Box>
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="stock">庫存狀態</InputLabel>
-                    <Select
-                      labelId="stock"
-                      id="stock-select"
-                      value={stockId}
-                      label="庫存狀態"
-                      onChange={handleSelectChange}
-                    >
-                      {stock.map((item) => {
-                        return (
-                          <MenuItem key={item.id} value={item.id}>
-                            {item.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
+                  <FormControl fullWidth size="small" error={!!errors.status}>
+                    <InputLabel id="stock-label">庫存狀態</InputLabel>
+                    <Controller
+                      name="status"
+                      control={control}
+                      rules={{ required: '請選擇庫存狀態' }}
+                      render={({ field }) => (
+                        <Select {...field} labelId="stock-label" id="stock-select" label="庫存狀態">
+                          {selectProducts.map((item) => (
+                            <MenuItem key={item.id} value={item.id}>
+                              {item.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                    {errors.status && (
+                      <FormHelperText sx={{ marginLeft: 0 }}>
+                        {errors.status.message}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 </Box>
 

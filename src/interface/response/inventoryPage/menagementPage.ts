@@ -7,3 +7,8 @@ export interface menagementPageResponse {
   supplier: string;
   status: string;
 }
+
+export interface menagementSelectPageResponse {
+  id: string;
+  name: string;
+}

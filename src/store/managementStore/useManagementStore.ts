@@ -1,8 +1,12 @@
-import { menagementPageResponse } from '@/interface/response/inventoryPage/menagementPage';
+import {
+  menagementPageResponse,
+  menagementSelectPageResponse,
+} from '@/interface/response/inventoryPage/menagementPage';
 import { create } from 'zustand';
 
 interface Management {
   displayedProducts: menagementPageResponse[];
+  selectProducts: menagementSelectPageResponse[];
   products: menagementPageResponse[];
   headleDelete: (value: number) => void;
   handleInputChange: (value: string) => void;
@@ -16,7 +20,7 @@ const initialProducts: menagementPageResponse[] = [
     quantity: 15,
     unitPrice: 25000,
     supplier: '科技公司A',
-    status: '庫存充足',
+    status: '1',
   },
   {
     id: 2,
@@ -25,7 +29,7 @@ const initialProducts: menagementPageResponse[] = [
     quantity: 3,
     unitPrice: 3500,
     supplier: '家具公司B',
-    status: '庫存吃緊',
+    status: '2',
   },
   {
     id: 3,
@@ -34,16 +38,19 @@ const initialProducts: menagementPageResponse[] = [
     quantity: 0,
     unitPrice: 8000,
     supplier: '科技公司C',
-    status: '缺貨',
+    status: '3',
   },
 ];
 
-interface Management {
-  products: menagementPageResponse[];
-}
+const initialSelectProducts: menagementSelectPageResponse[] = [
+  { id: '1', name: '庫存充足' },
+  { id: '2', name: '庫存不足' },
+  { id: '3', name: '缺貨' },
+];
 
 const useManagement = create<Management>((set) => ({
   displayedProducts: initialProducts,
+  selectProducts: initialSelectProducts,
   products: initialProducts,
 
   // 刪除
