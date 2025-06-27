@@ -17,14 +17,28 @@ export default function InventoryManagementPage() {
   // 取得狀態顏色
   const getStatusColor = (status: string): string => {
     switch (status) {
-      case '庫存充足':
+      case '1':
         return 'bg-green-100 text-green-800';
-      case '庫存吃緊':
+      case '2':
         return 'bg-yellow-100 text-yellow-800';
-      case '缺貨':
+      case '3':
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  // 取得狀態文字
+  const getStatusText = (status: string): string => {
+    switch (status) {
+      case '1':
+        return '庫存充足';
+      case '2':
+        return '庫存吃緊';
+      case '3':
+        return '缺貨';
+      default:
+        return '庫存充足';
     }
   };
 
@@ -115,7 +129,7 @@ export default function InventoryManagementPage() {
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status.toLowerCase())}`}
                     >
-                      {item.status}
+                      {getStatusText(item.status)}
                     </span>
                   </div>
                   <div className="text-sm text-gray-600 mb-1">{item.category}</div>
