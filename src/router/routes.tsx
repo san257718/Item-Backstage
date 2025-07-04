@@ -13,7 +13,8 @@ import UserSettings from '@/pages/SettingsPage/userSettings/UserSettings';
 import RoleSettings from '@/pages/SettingsPage/roleSettings/RoleSettings';
 
 // 檢查是否已登入
-const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
+// const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true';
+const isAuthenticated = () => localStorage.getItem('token') !== null;
 
 // 受保護的路由元件
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {

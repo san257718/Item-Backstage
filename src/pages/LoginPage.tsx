@@ -6,22 +6,31 @@ import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../api/login';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // 簡單的登入驗證
-    if (username === 'admin@gmail.com' && password === 'admin123') {
-      // 設置登入狀態
-      localStorage.setItem('isAuthenticated', 'true');
-      // 跳轉到後台首頁
+  const handleLogin = async () => {
+    // // 簡單的登入驗證
+    // if (username === 'admin@gmail.com' && password === 'admin123') {
+    //   // 設置登入狀態
+    //   localStorage.setItem('isAuthenticated', 'true');
+    //   // 跳轉到後台首頁
+    //   navigate('/admin/dashboard', { replace: true });
+    // } else {
+    //   setError('帳號或密碼錯誤');
+    // }
+
+    try {
+      const response = await login(email, password);
+      localStorage.setItem('token', response.data.token);
       navigate('/admin/dashboard', { replace: true });
-    } else {
-      setError('帳號或密碼錯誤');
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -41,8 +50,8 @@ export default function LoginPage() {
           <div className="flex flex-col space-y-4 p-6 pt-0">
             <div className="w-full flex justify-center items-center">
               <TextField
-                id="username"
-                label="user"
+                id="email"
+                label="email"
                 variant="outlined"
                 size="small"
                 sx={{ width: '45ch' }}
@@ -51,8 +60,8 @@ export default function LoginPage() {
                     startAdornment: <PersonIcon color="action" />,
                   },
                 }}
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 error={!!error}
               />
             </div>

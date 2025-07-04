@@ -2,14 +2,32 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
-
+import { getUser, logout } from '@/api/login';
 export default function Header() {
   const navigate = useNavigate();
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // 清除登入狀態
-    localStorage.removeItem('isAuthenticated');
+    // localStorage.removeItem('isAuthenticated');
     // 跳轉到登入頁
-    navigate('/');
+    // navigate('/');
+
+    try {
+      const response = await logout();
+      localStorage.removeItem('token');
+      navigate('/');
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const test = async () => {
+    try {
+      const response = await getUser();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -28,6 +46,8 @@ export default function Header() {
           </Button>
         </div>
       </div>
+
+      <button onClick={test}>測試</button>
     </div>
   );
 }
