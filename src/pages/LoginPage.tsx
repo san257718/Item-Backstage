@@ -24,8 +24,6 @@ export default function LoginPage() {
     // } else {
     //   setError('帳號或密碼錯誤');
     // }
-
-    console.log(process.env.REACT_APP_API_BASE_URL);
     
 
     try {

@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 export const jsonApi = axios.create({
-  baseURL:
-    process.env.REACT_APP_API_BASE_URL !== 'development'
-      ? 'https://item-backstage-data.vercel.app/'
-      : 'http://localhost:5000',
+  baseURL: 'https://item-backstage-data.vercel.app/', // 本地開發
   headers: {
     'Content-Type': 'application/json',
   },
