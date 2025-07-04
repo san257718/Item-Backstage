@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "webpack serve --env webpack.config.cjs",
+    "prod": "webpack serve --env webpack.config.prod.cjs",
     "build": "webpack --env webpack.config.prod.cjs",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx,cjs}\"",
     "lint:fix": "eslint \"**/*.{js,jsx,ts,tsx,cjs}\" --fix",

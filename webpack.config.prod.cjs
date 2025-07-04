@@ -9,23 +9,12 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js', // bundle.js 改為 [name].[contenthash].js
     clean: true,
     publicPath: '/',
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    static: {
-      directory: path.join(__dirname, 'dist'),
-    },
-    port: 3000,
-    open: true,
-    hot: true,
-    historyApiFallback: true,
-    client: {
-      overlay: true,
-    },
-  },
+  devtool: false,
+
   module: {
     rules: [
       {
@@ -73,7 +62,7 @@ module.exports = {
     }),
 
     new MiniCssExtractPlugin({
-      filename: '[name].css', // 會產生 e.g. main.css
+      filename: '[name].[contenthash].css', // 將 '[name].css' 改為 '[name].[contenthash].css'
     }),
 
     new webpack.DefinePlugin({

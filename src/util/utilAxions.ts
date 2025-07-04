@@ -1,7 +1,7 @@
 import axios from 'axios';
 // 根據環境變數設定 baseURL
 const baseURL =
-  process.env.REACT_APP_DEV_API_KEY === 'http://localhost:5000'
+  process.env.APP_DEV_API_KEY === 'http://localhost:5000'
     ? 'http://localhost:5000/'
     : 'https://item-backstage-data.vercel.app/'; // 開發環境的 baseURL
 
