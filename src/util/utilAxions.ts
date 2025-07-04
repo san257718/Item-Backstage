@@ -9,7 +9,6 @@ console.log(baseURL);
 
 export const jsonApi = axios.create({
   baseURL: baseURL, // 本地開發
-  // baseURL: 'http://localhost:5000', // 本地開發
   headers: {
     'Content-Type': 'application/json',
   },
