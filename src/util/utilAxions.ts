@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 export const jsonApi = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL:
+    process.env.REACT_APP_API_BASE_URL !== 'development'
+      ? 'https://item-backstage-data.vercel.app/'
+      : 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -22,7 +25,6 @@ jsonApi.interceptors.request.use(
 // 3. 添加響應攔截器來檢查回應
 jsonApi.interceptors.response.use(
   (response) => {
-
     return response;
   },
   (error) => {
@@ -33,7 +35,7 @@ jsonApi.interceptors.response.use(
 
       window.location.href = '/';
     }
-    
+
     return Promise.reject(error);
   }
 );

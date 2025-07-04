@@ -25,6 +25,9 @@ export default function LoginPage() {
     //   setError('帳號或密碼錯誤');
     // }
 
+    console.log(process.env.REACT_APP_API_BASE_URL);
+    
+
     try {
       const response = await login(email, password);
       localStorage.setItem('token', response.data.token);
