@@ -1,10 +1,11 @@
 import axios from 'axios';
 const baseURL =
-  process.env.NODE_ENV !== 'development'
-    ? 'https://item-backstage-data.vercel.app/' // 生產環境的 baseURL
-    : 'http://localhost:5000'; // 開發環境的 baseURL
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5000/'
+    : 'https://item-backstage-data.vercel.app/'; // 開發環境的 baseURL
 
 console.log(baseURL);
+
 
 export const jsonApi = axios.create({
   baseURL: baseURL, // 本地開發
