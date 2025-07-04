@@ -1,7 +1,14 @@
 import axios from 'axios';
+const baseURL =
+  process.env.NODE_ENV !== 'development'
+    ? 'https://item-backstage-data.vercel.app/' // 生產環境的 baseURL
+    : 'http://localhost:5000'; // 開發環境的 baseURL
+
+console.log(baseURL);
 
 export const jsonApi = axios.create({
-  baseURL: 'https://item-backstage-data.vercel.app/', // 本地開發
+  baseURL: baseURL, // 本地開發
+  // baseURL: 'http://localhost:5000', // 本地開發
   headers: {
     'Content-Type': 'application/json',
   },
@@ -30,7 +37,7 @@ jsonApi.interceptors.response.use(
       // 可以選擇重導向到登入頁面或清除本地狀態
       localStorage.removeItem('token');
 
-      window.location.href = '/';
+      // window.location.href = '/';
     }
 
     return Promise.reject(error);
