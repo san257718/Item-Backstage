@@ -2,7 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-require('dotenv').config({ path: './.env' }); // 引入 dotenv 並載入 .env 檔案
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   mode: 'development',
@@ -76,13 +77,7 @@ module.exports = {
       filename: '[name].css', // 會產生 e.g. main.css
     }),
 
-    new webpack.DefinePlugin({
-      // 定義你的環境變數。Webpack 會將這些值注入到你的客戶端程式碼中。
-      // 注意：這裡的值會被序列化（JSON.stringify），所以字符串需要加上引號。
-      'process.env.APP_DEV_API_KEY': JSON.stringify(process.env.APP_DEV_API_KEY),
-      // 你也可以定義其他你需要的環境變數
-      // 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    }),
+    new Dotenv({ path: './.env.development' }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
