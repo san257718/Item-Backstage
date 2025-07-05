@@ -2,7 +2,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Button from '@mui/material/Button';
-import { getUser, logout } from '@/api/login';
+import { getUser, logout, createUser } from '@/api/login';
 export default function Header() {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -30,6 +30,18 @@ export default function Header() {
     }
   };
 
+  const headlecreateUser = async () => {
+    try {
+      const response = await createUser({
+        email: 'admin@gmail.com',
+        password: 'admin123',
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex h-16 bg-white border-b border-gray-200 items-center justify-between px-6">
       <h1 className="text-lg font-semibold text-gray-800">歡迎回來，管理員</h1>
@@ -48,6 +60,7 @@ export default function Header() {
       </div>
 
       <button onClick={test}>測試</button>
+      <button onClick={headlecreateUser}>測試建立使用者</button>
     </div>
   );
 }
