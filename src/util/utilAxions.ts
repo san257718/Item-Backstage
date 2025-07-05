@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 // 根據環境變數設定 baseURL
-const baseURL =
-  process.env.APP_DEV_API_KEY === 'http://localhost:5000'
-    ? 'http://localhost:5000/'
-    : 'https://item-backstage-data.vercel.app/'; // 開發環境的 baseURL
+
+const LOCAL_BASE_URL = process.env.NODE_ENV;
+const DEV_BASE_URL = 'http://localhost:5000/';
+const PROD_BASE_URL = 'https://item-backstage-data.vercel.app/';
 
 export const jsonApi = axios.create({
-  baseURL: baseURL, // 本地開發
+  baseURL: LOCAL_BASE_URL === 'development' ? DEV_BASE_URL : PROD_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
