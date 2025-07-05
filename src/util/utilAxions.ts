@@ -1,7 +1,10 @@
 import axios from 'axios';
 
-const isProduction = process.env.NODE_ENV === 'production';
-const baseURL = isProduction ? 'https://item-backstage-data.vercel.app/' : 'http://localhost:5000/'; // 請確保這是您本地後端實際運行的端口
+// 根據環境變數設定 baseURL
+const baseURL =
+  process.env.APP_DEV_API_KEY === 'http://localhost:5000'
+    ? 'http://localhost:5000/'
+    : 'https://item-backstage-data.vercel.app/'; // 開發環境的 baseURL
 
 export const jsonApi = axios.create({
   baseURL: baseURL, // 本地開發
