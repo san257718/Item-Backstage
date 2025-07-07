@@ -6,8 +6,11 @@ export const getUser = async () => {
   return response.data;
 };
 
-export const createUser = async (data: any) => {
-  const response = await jsonApi.post('/api/users', data);
+export const createUser = async (email: string, password: string) => {
+  const response = await jsonApi.post('/api/users', {
+    email,
+    password,
+  });
   return response.data;
 };
 

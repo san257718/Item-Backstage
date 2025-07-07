@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack.config.cjs",
+    "prod": "cross-env NODE_ENV=production webpack serve --config webpack.config.cjs",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.cjs",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx,cjs}\"",
     "lint:fix": "eslint \"**/*.{js,jsx,ts,tsx,cjs}\" --fix",

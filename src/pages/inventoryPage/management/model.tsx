@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useManagement from '@/store/managementStore/useManagementStore';
 import { menagementIFormInputRequest } from '@/interface/request/menagementPage';
 import {
@@ -31,6 +31,14 @@ export default function ManagementPageModel({
   onSubmit,
 }: managementPageModalProps) {
   const { selectProducts } = useManagement();
+  const resetForm = useRef({
+    productName: '',
+    productCategory: '',
+    quantity: 0,
+    unitPrice: 0,
+    supplier: '',
+    stockId: '',
+  });
 
   const {
     handleSubmit,
@@ -40,15 +48,7 @@ export default function ManagementPageModel({
   } = useForm<menagementIFormInputRequest>({
     // defaultValues 會在組件第一次渲染時設定
     // 當 formData 變化時，useEffect 會觸發 reset
-    defaultValues: formData || {
-      // 如果 formData 是 null (新增模式)，提供一個預設空物件
-      productName: '',
-      productCategory: '',
-      quantity: 0,
-      unitPrice: 0,
-      supplier: '',
-      stockId: '',
-    },
+    defaultValues: formData || resetForm,
   });
 
   useEffect(() => {

@@ -4,15 +4,25 @@ import ShieldIcon from '@mui/icons-material/Shield';
 import TextField from '@mui/material/TextField';
 import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../api/login';
-
+import { login } from '../../api/login';
+import LoginModel from './model';
+import { LoginIFormInputRequest } from '@/interface/request/LoginPage';
 export default function LoginPage() {
+  const [addOpen, setAddOpen] = useState<boolean>(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string>('');
   const navigate = useNavigate();
+
+  const handleModalOpen = () => {
+    setAddOpen(true);
+  };
+
+  const headleModalClose = () => {
+    setAddOpen(false);
+  };
 
   const handleLogin = async () => {
     // // 簡單的登入驗證
@@ -24,7 +34,6 @@ export default function LoginPage() {
     // } else {
     //   setError('帳號或密碼錯誤');
     // }
-    
 
     try {
       const response = await login(email, password);
@@ -79,9 +88,14 @@ export default function LoginPage() {
                 error={!!error}
               />
             </div>
-            <Button variant="contained" onClick={handleLogin}>
-              登入
-            </Button>
+            <div className="flex space-x-2 gap-2">
+              <Button className="flex-1" variant="contained" onClick={handleLogin}>
+                登入
+              </Button>
+              <Button className="flex-1" variant="outlined" onClick={handleModalOpen}>
+                新增帳號
+              </Button>
+            </div>
 
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
               <h4>測試帳號</h4>
@@ -91,6 +105,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
+      <LoginModel addOpen={addOpen} headleModalClose={headleModalClose} />
     </div>
   );
 }

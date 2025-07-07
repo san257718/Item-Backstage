@@ -3,7 +3,7 @@ import DashboardPage from '@/pages/DashboardPage/DashboardPage';
 import InventoryPage from '@/pages/inventoryPage/InventoryPage';
 import PeopleSettings from '@/pages/PeopleSettings/peopleSettings';
 import SettingsPage from '@/pages/SettingsPage/SettingsPage';
-import LoginPage from '@/pages/LoginPage';
+import LoginPage from '@/pages/LoginPage/LoginPage';
 import MainLayout from '@/layout/MainLayout';
 import { Navigate } from 'react-router-dom';
 import InventoryManagementPage from '@/pages/inventoryPage/management/managementPage';
