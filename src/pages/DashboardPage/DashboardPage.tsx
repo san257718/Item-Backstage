@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dashboardData from '@/json/DashboardPage.json';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';

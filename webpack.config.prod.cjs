@@ -15,6 +15,15 @@ module.exports = {
   },
   devtool: false,
 
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minSize: 30000, // 最小體積閾值
+      minChunks: 2, // 最小被引用次數
+      name: 'common',
+    },
+  },
+
   module: {
     rules: [
       {

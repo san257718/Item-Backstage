@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const Dotenv = require('dotenv-webpack');
 
-
 module.exports = {
   mode: 'development',
   entry: './src/index.tsx',
@@ -25,6 +24,14 @@ module.exports = {
     historyApiFallback: true,
     client: {
       overlay: true,
+    },
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      minSize: 30000, // 最小體積閾值
+      minChunks: 2, // 最小被引用次數
+      name: 'common',
     },
   },
   module: {
