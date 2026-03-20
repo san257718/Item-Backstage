@@ -9,23 +9,27 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
+import Modal from '@mui/material/Modal';
 
 interface PropleSettingModelProps {
   addOpen: boolean;
   editOpen: boolean;
-  handleModalOpen: (value: string) => void;
   headleModalClose: () => void;
 }
 export default function PropleSettingModel({
   addOpen,
   editOpen,
-  handleModalOpen,
   headleModalClose,
 }: PropleSettingModelProps) {
   return (
     <div>
-      {addOpen || editOpen ? (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+      <Modal
+        open={addOpen || editOpen}
+        onClose={headleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
           <div className="rounded-lg shadow-sm w-full bg-white max-w-md max-h-[90vh] overflow-y-auto">
             <div className="flex flex-col space-y-1.5 p-6">
               <div className="flex items-center justify-between">
@@ -127,7 +131,7 @@ export default function PropleSettingModel({
             </div>
           </div>
         </div>
-      ) : null}
+      </Modal>
     </div>
   );
 }

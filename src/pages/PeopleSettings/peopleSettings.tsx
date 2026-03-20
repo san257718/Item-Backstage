@@ -106,7 +106,6 @@ export default function PeopleSettings() {
       <PropleSettingModel
         addOpen={addOpen}
         editOpen={editOpen}
-        handleModalOpen={() => handleModalOpen('add')}
         headleModalClose={() => headleModalClose()}
       />
     </div>
